@@ -10,6 +10,7 @@ using System;
 using static Helper;
 using System.IO;
 using System.Text;
+using System.Collections;
 
 
 public class App
@@ -43,6 +44,37 @@ public class App
         Console.WriteLine(RomanToInteger("XIX"));
         Console.WriteLine(IntToRoman(21));
 
+
+        Animal[] animals = new Animal[7]
+        {
+            new Animal {ID = 4, Name = "Tiger", FoodIntake = 3.54 },
+            new Animal {ID = 7, Name = "Cat", FoodIntake = 1.02 },
+            new Animal {ID = 1, Name = "Owl", FoodIntake = 0.88 },
+            new Animal {ID = 6, Name = "Elephant", FoodIntake = 8.32 },
+            new Animal {ID = 3, Name = "Dog", FoodIntake = 2.18 },
+            new Animal {ID = 5, Name = "Duck", FoodIntake = 1.29 },
+            new Animal {ID = 2, Name = "Bear", FoodIntake = 6.98 }
+        };
+
+        Console.WriteLine("Initial Input Array: ");
+        foreach (Animal animal in animals)
+        {
+            Console.WriteLine(animal);
+        }
+
+        Console.WriteLine("\nArray sorted by Food Intake: ");
+        Array.Sort(animals);
+        foreach (Animal animal in animals)
+        {
+            Console.WriteLine(animal);
+        }
+
+        Console.WriteLine("\nArray sorted by Name: ");
+        Array.Sort(animals, Animal.SortByName);
+        foreach (Animal animal in animals)
+        {
+            Console.WriteLine(animal);
+        }
     }
 }
 
@@ -206,4 +238,46 @@ class Helper
         throw new ArgumentOutOfRangeException("Something bad happened");
     }
 
+}
+
+
+class Animal : IComparable
+{
+    public int ID { get; set; }
+
+    public string Name { get; set; }    
+
+    public double FoodIntake { get; set; }
+
+    public override string ToString()
+    {
+        return String.Format("ID: {0, 3} Name: {1, -9} Food Intake: {2, 3}", ID, Name, FoodIntake);
+    }
+
+    public static IComparer SortByName
+    {
+        get
+        {
+            return (IComparer)new NameComparer();
+        }
+    }
+    
+
+    public int CompareTo(object? obj)
+    {
+        Animal tmp = (Animal)obj;
+        if (this.FoodIntake > tmp.FoodIntake) return 1;
+        if (this.FoodIntake < tmp.FoodIntake) return -1; 
+        else return 0;
+    }
+}
+
+class NameComparer : IComparer
+{
+    int IComparer.Compare(object x, object y)
+    {
+        Animal animal1 = (Animal)x;
+        Animal animal2 = (Animal)y;
+        return String.Compare(animal1.Name, animal2.Name);
+    }
 }
