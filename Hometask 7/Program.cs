@@ -2,7 +2,7 @@
 
 // 1. Class Angle. 1 deg = 60 mins, 1 min = 60 secs. 
 //    Overload + and - operators. ✅
-// 2. Create a class and create a custom sorting using ...
+// 2. Create a class and create a custom sorting using ... ✅
 // 3. Create a utility class ( 3.1. Use static methods) ✅
 // 4. Use static constructor ✅
 
@@ -17,19 +17,18 @@ public class App
 {
     public static void Main(string[] args)
     {
-        //Angle LOG = new Angle();
-        Angle a = new Angle(5, 26, 12);
-        Angle b = new Angle(3, 7, 34);
+        Angle a = new Angle(3, 36, 53);
+        Angle b = new Angle(4, 27, 45);
         Angle c = new Angle(0, 36, 2);
         Angle d = new Angle(3, 14, 17);
         Angle e = new Angle(0, 21, 45);
         Angle f = new Angle(-23, -21, -45);
         Angle abc = new Angle(20, 102, 71);
-        //Console.WriteLine(abc);
+        Console.WriteLine(abc.ToString());
         // c = (8, 4, 38)
         //Console.WriteLine(a.ToString());
 
-        //Console.WriteLine((a + b).ToString());
+        Console.WriteLine((a + b).ToString());
         //Console.WriteLine((a - b).ToString());
         Console.WriteLine(c);
         Console.WriteLine(d);
@@ -88,16 +87,21 @@ public class Angle
     {
         try
         {
-            // If techcoil.txt exists, seek to the end of the file,
-            // else create a new one.
+            var lastLine = File.ReadLines("hometask7.txt").Last();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Last Log: " + lastLine);
+            Console.ForegroundColor = ConsoleColor.White;
+            
+
             FileStream fileStream = File.Open("hometask7.txt",
                 FileMode.Append, FileAccess.Write);
-            // Encapsulate the filestream object in a StreamWriter instance.
+            
             StreamWriter fileWriter = new StreamWriter(fileStream);
-            // Write the current date time to the file
+            
             fileWriter.WriteLine("Compiled at " + System.DateTime.Now.ToString() + " by " + Environment.UserName + " on " + Environment.OSVersion);
             fileWriter.Flush();
             fileWriter.Close();
+            
         }
         catch (IOException ioe)
         {
@@ -106,11 +110,9 @@ public class Angle
     }
     public Angle(int deg, int min, int sec)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
         this.deg = deg + min / 60;
         this.min = (sec / 60) + min % 60;
         this.sec = sec % 60;
-        Console.ForegroundColor = ConsoleColor.White;
     }
 
     public Angle (Angle angle)
@@ -132,17 +134,12 @@ public class Angle
 
     public static Angle operator -(Angle first, Angle second)
     {
-        //Console.WriteLine((first.deg.ToString() + first.min.ToString() + first.sec.ToString()));
         int var1 = Int32.Parse(first.deg.ToString() + first.min.ToString() + first.sec.ToString());
         int var2 = Int32.Parse(second.deg.ToString() + second.min.ToString() + second.sec.ToString());
         
         if (var1 - var2 == 0) return new Angle(0, 0, 0);
 
         int marker = var1 > var2 ? 1 : -1;
-
-        //Console.ForegroundColor= ConsoleColor.Green;
-        //Console.WriteLine(marker);
-        //Console.ForegroundColor= ConsoleColor.Green;
 
         int s, m, g; int mt, gt;
         
@@ -173,9 +170,6 @@ public class Angle
             s = first.sec - second.sec;
             g = first.deg - second.deg;
         }
-
-        //Console.WriteLine("***   " + g + " " + m + " " + s);
-        //Console.WriteLine("Marker " + marker);
 
         return new Angle(marker * Math.Abs(g), marker * Math.Abs(m), marker * Math.Abs(s));
     }
@@ -258,7 +252,7 @@ class Animal : IComparable
     {
         get
         {
-            return (IComparer)new NameComparer();
+            return new NameComparer();
         }
     }
     
