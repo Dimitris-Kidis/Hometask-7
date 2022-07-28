@@ -79,9 +79,10 @@ public class App
 
 public class Angle
 {
-    public int deg { get; set; }
-    public int min { get; set; }
-    public int sec { get; set; }
+    public int Deg { get; set; }
+    // *
+    public int Min { get; set; }
+    public int Sec { get; set; }
 
     static Angle ()
     {
@@ -110,32 +111,32 @@ public class Angle
     }
     public Angle(int deg, int min, int sec)
     {
-        this.deg = deg + min / 60;
-        this.min = (sec / 60) + min % 60;
-        this.sec = sec % 60;
+        this.Deg = deg + min / 60;
+        this.Min = (sec / 60) + min % 60;
+        this.Sec = sec % 60;
     }
 
     public Angle (Angle angle)
     {
-        deg = angle.deg;
-        min = angle.min;
-        sec = angle.sec;
+        Deg = angle.Deg;
+        Min = angle.Min;
+        Sec = angle.Sec;
     }
 
     public override string ToString()
     {
-        return "T = " + deg + "° " + min.ToString("D2") + "\' " + sec.ToString("D2") + "\" ";
+        return "T = " + Deg + "° " + Min.ToString("D2") + "\' " + Sec.ToString("D2") + "\" ";
     }
 
     public static Angle operator +(Angle first, Angle second)
     {
-        return new Angle(first.deg + second.deg, first.min + second.min, first.sec + second.sec);
+        return new Angle(first.Deg + second.Deg, first.Min + second.Min, first.Sec + second.Sec);
     }
 
     public static Angle operator -(Angle first, Angle second)
     {
-        int var1 = Int32.Parse(first.deg.ToString() + first.min.ToString() + first.sec.ToString());
-        int var2 = Int32.Parse(second.deg.ToString() + second.min.ToString() + second.sec.ToString());
+        int var1 = Int32.Parse(first.Deg.ToString() + first.Min.ToString() + first.Sec.ToString());
+        int var2 = Int32.Parse(second.Deg.ToString() + second.Min.ToString() + second.Sec.ToString());
         
         if (var1 - var2 == 0) return new Angle(0, 0, 0);
 
@@ -143,32 +144,32 @@ public class Angle
 
         int s, m, g; int mt, gt;
         
-        if (first.sec < second.sec && first.min < second.min)
+        if (first.Sec < second.Sec && first.Min < second.Min)
         {
-            s = (first.sec + 60) - second.sec;
-            mt = first.min - 1;
-            m = mt - second.min;
-            g = first.deg - second.deg;
-            m = (first.min + 60) - second.min;
-            gt = first.deg - 1;
-            g = gt - second.deg;
-        } else if (first.sec < second.sec)
+            s = (first.Sec + 60) - second.Sec;
+            mt = first.Min - 1;
+            m = mt - second.Min;
+            g = first.Deg - second.Deg;
+            m = (first.Min + 60) - second.Min;
+            gt = first.Deg - 1;
+            g = gt - second.Deg;
+        } else if (first.Sec < second.Sec)
         {
-            s = (first.sec + 60) - second.sec;
-            mt = first.min - 1;
-            m = mt - second.min;
-            g = first.deg - second.deg;
-        } else if (first.min < second.min)
+            s = (first.Sec + 60) - second.Sec;
+            mt = first.Min - 1;
+            m = mt - second.Min;
+            g = first.Deg - second.Deg;
+        } else if (first.Min < second.Min)
         {
-            m = (first.min + 60) - second.min;
-            gt = first.deg - 1;
-            g = gt - second.deg;
-            s = first.sec - second.sec;
+            m = (first.Min + 60) - second.Min;
+            gt = first.Deg - 1;
+            g = gt - second.Deg;
+            s = first.Sec - second.Sec;
         } else
         {
-            m = first.min - second.min;
-            s = first.sec - second.sec;
-            g = first.deg - second.deg;
+            m = first.Min - second.Min;
+            s = first.Sec - second.Sec;
+            g = first.Deg - second.Deg;
         }
 
         return new Angle(marker * Math.Abs(g), marker * Math.Abs(m), marker * Math.Abs(s));
